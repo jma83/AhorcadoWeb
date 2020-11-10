@@ -3,7 +3,7 @@ import WordManager from './gameManager'
 //la dificultad
 //llama al gestor de palabras
 export default class GameManager {
-    constructor() {
+    constructor(dificultad) {
         
         //coge la configuracion del jugador
         this.name = "";
@@ -13,11 +13,11 @@ export default class GameManager {
         //se la pasa al wordManager creado
         this.wordManager = new WordManager();
         //coge el elemento de input del jugador para las letras tecleadas
-
+        this.selectMode(dificultad);
     }
 
     selectMode(m){
-        if (m == "Easy"){
+        if (m == 1){
             this.time = 120;
             this.letrasOcultas = 0.3;
             this.lifes = 1.5;
