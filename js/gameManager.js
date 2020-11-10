@@ -6,6 +6,7 @@ export default class GameManager {
     constructor() {
         
         //coge la configuracion del jugador
+        this.name = "";
         this.time = 0;
         this.letrasOcultas = 0;
         this.lifes = 0;

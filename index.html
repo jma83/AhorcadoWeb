@@ -1,30 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El ahorcado!</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El ahorcado!</title>
 
-    <link rel="stylesheet" href="./css/bootstrap.min.css" />
-    <script src="./js/bootstrap/jquery-3.5.1.slim.min.js" defer></script>
-    <script src="./js/bootstrap/popper.min.js" defer></script>
-    <script src="./js/bootstrap/bootstrap.min.js" defer></script>
-    <script type="module" src="./js/index.js" defer></script>
+  <link rel="stylesheet" href="./css/bootstrap.min.css" />
+  <script src="./js/bootstrap/jquery-3.5.1.slim.min.js" defer></script>
+  <script src="./js/bootstrap/popper.min.js" defer></script>
+  <script src="./js/bootstrap/bootstrap.min.js" defer></script>
+  <script type="module" src="./js/index.js" defer></script>
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-light bg-light">
-            <a class="navbar-brand" href="index.html">
-              <img src="/img/logo.png" width="54" height="54" class="d-inline-block align-top float-left mr-2" alt="logo-tres-en-linea" />
-              <h1 class="float-left">El Ahorcado Web!</h1>
-            </a>
-          </nav>
-    </header>
-    <main class="container">
-        pepe!
-    </main>
-    <footer>
 
-    </footer>
+<body>
+  <header>
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="index.html">
+        <img src="/img/logo.png" width="54" height="54" class="d-inline-block align-top float-left mr-2"
+          alt="logo-tres-en-linea" />
+        <h1 class="float-left">El Ahorcado Web!</h1>
+      </a>
+    </nav>
+  </header>
+  <main class="container">
+    <div id="seleccionInicial" class="card breadcrumb m-4 ">
+      <h2 class="row p-2 justify-content-center">Introduce nombre y dificultad</h2>
+      <form id="my-form">
+        <div class="row form-group mt-2 justify-content-center p-2">
+          <label for="name" class="col-4 col-md-2">Nombre:</label>
+          <input type="text" class="form-control col-8 col-md-4" placeholder="Introduce nombre" aria-label="Nombre" id="name" name="name" required>
+        </div>
+        <div class="row btn-group-toggle justify-content-center mt-4 p-2" role="group" aria-label="Level of difficult">
+          <button type="submit" class="btn btn-success col-md-3" id="easy">Fácil</button>
+          <button type="submit" class="btn btn-primary col-md-3" id="regular">Normal</button>
+          <button type="submit" class="btn btn-danger col-md-3" id="hard">Díficil</button>
+        </div>
+      </form>
+    </div>
+    <div id="seleccionInicial2" class="card breadcrumb m-4 ">
+      <ul class="list-group list-group-horizontal-sm text-center justify-content-sm-center">
+        <li class="list-group-item col col-lg-1">C</li>
+        <li class="list-group-item col col-lg-1">A</li>
+        <li class="list-group-item col col-lg-1">C</li>
+        <li class="list-group-item col col-lg-1">O</li>
+        <li class="list-group-item col col-lg-1">T</li>
+        <li class="list-group-item col col-lg-1">A</li>
+      </ul>
+    </div>
+  </main>
+  <footer>
+
+  </footer>
 </body>
+
 </html>
