@@ -12,84 +12,111 @@ export default class WordManager {
         //coge la configuracion del jugador y se la pasa al wordManager creado
         //coge el elemento de input del jugador para las letras tecleadas
         this.palabras = [];
-        this.palabra = "";
         this.arrayLetras = [];
-        this.arrayLetrasFicticias = [];
+        this.arrayLetrasVisibles = [];
         this.tamanyoPalabra = 0;
     }
 
     checkGuessedWord() {
-
+        return !this.arrayLetrasVisibles.includes("_",0,this.arrayLetrasVisibles.length);
     }
 
-    seleccionarPalabra() {
+    seleccionarPalabra() {  //Metodo que selecciona una palabra de la lista
         const a = Math.floor(Math.random() * (this.palabras.length));
-        this.palabra = this.palabras[a].word;
-        console.log(this.palabra);
+        let palabra = this.palabras[a].word;
+        console.log(palabra);
         let i = 0;
-        for (i = 0; i < this.palabra.length; i++) {
+        for (i = 0; i < palabra.length; i++) {
             this.arrayLetras.push(new LetterManager());
-            this.arrayLetras[i].setLetter(this.palabra.charAt(i));
-            this.arrayLetrasFicticias.push("_");
+            this.arrayLetras[i].setLetter(palabra.charAt(i));
+            this.arrayLetrasVisibles.push("_");
         }
-        console.log(i)
         this.tamanyoPalabra = i;
-        this.palabra = "";
+        palabra = "";
         this.palabras = [];
     }
 
-    mostrarLetrasRandom(tam) {
-        let pepe = this;
+    mostrarLetrasRandom(tam) {  // Metodo que muestra inicialmente el numero de letras especificado por parametro
+        let newthis = this;
         let arrayLettrasRandom = [];
         let posicionRandom=-1;
+        let arrayPosicionesOk=[];
         return new Promise(function (resolve, reject) {
             let cont = 0;
-            for (let i = 0; i < tam; i++) {
-                cont = 0;
-                posicionRandom = pepe.encontrarLetraDistinta(arrayLettrasRandom);
-                let letra = pepe.arrayLetras[posicionRandom].getLetter();
-                arrayLettrasRandom.push(letra);
-                /*for (let j = 0; cont < pepe.palabra.length; j++) {
-                    if (pepe.palabra[j].getLetter() === letra && posicionRandom !== j) {
+            let contaux = 0;
+            let contfin = 0;
+            let letra = "";
+            while (cont != tam && contfin<tam*2){   //condicion de salida extra por si no encuentra otra letra que encaje con el numero solicitado
+                contaux = cont;
+                posicionRandom = newthis.encontrarLetraDistinta(arrayLettrasRandom);    //busco una letra que no este ya marcada
+                letra = newthis.arrayLetras[posicionRandom].getLetter();
+                arrayLettrasRandom.push(letra); //una vez encontrado la guardo en la lista
+                for (let j = 0; j < newthis.arrayLetrasVisibles.length; j++) {  //busco el numero de ocurrencias de esa letra en la palabra
+                    if (newthis.arrayLetras[j].getLetter() === letra) {
                         cont++;
+                        arrayPosicionesOk.push(j);
                     }
-                }*/
-                if (cont == 0) {
-                    pepe.arrayLetrasFicticias[posicionRandom] = letra;
-                    console.log("hola!")
-                } else {
+                }
+                contfin++;
+
+                if (cont > tam) {   //si el numero de ocurrencias es superior reinicio el contador y busco otra letra
                     console.log("la letra:" + letra + " esta varias veces!!! " + cont)
+                    cont = contaux;
+                }else{  //si el numero de ocurrencias es inferior o igual lo recorro y cambio para mostrarlo
+                    for (let k = 0; k < cont;k++){
+                        let indice = arrayPosicionesOk[k];
+                        newthis.arrayLetrasVisibles[indice]=newthis.arrayLetras[indice].getLetter();
+                    }
                 }
             }
             resolve();
         });
     }
 
-    encontrarLetraDistinta(p) {
+    encontrarLetraDistinta(p) { // Metodo que busca una letra aleatoria dentro de la palabra que noo este ya en la lista recibida por parametro
         let posicionRandom = -1;
         do {
-            posicionRandom = Math.floor(Math.random() * (this.arrayLetrasFicticias.length));
+            posicionRandom = Math.floor(Math.random() * (this.arrayLetrasVisibles.length));
         } while (p.includes(this.arrayLetras[posicionRandom].getLetter()));
-        console.log("pos random! selected" + posicionRandom)
+
         return posicionRandom;
     }
 
-    getWords() {
-        let pepe = this;
+    getWords() {    // Metodo que obtiene las palabras de un json y se guarda una de ellas aleatoriamiente
+        let newthis = this;
         return new Promise(function (resolve, reject) {
 
             fetch("./js/data/words.json")
                 .then((response) => response.json())
                 .then((data) => {
-                    pepe.palabras = data.wordList;
+                    newthis.palabras = data.wordList;
                 }).then(() => {
-                    pepe.seleccionarPalabra();
+                    newthis.seleccionarPalabra();
                 }).then(() => {
                     resolve();
+                }).catch((e) =>{
+                    reject(e);
                 });
 
 
         });
+    }
+
+    comprobarLetraEnviada(a) {
+        let b = 0;
+        for (let j = 0; j < this.arrayLetrasVisibles.length; j++) {  //busco el numero de ocurrencias de esa letra en la palabra
+            if (this.arrayLetras[j].getLetter() == a.toLowerCase()) {
+                if (this.arrayLetrasVisibles[j]!=a){
+                    this.arrayLetrasVisibles[j] = this.arrayLetras[j].getLetter();
+                    b++;
+                }else{
+                    b=-1;
+                    break;
+                }
+            }
+        }
+
+        return b;
     }
 
     getArrayLetras() {
@@ -97,7 +124,7 @@ export default class WordManager {
     }
 
     getLetrasVisibles() {
-        return this.arrayLetrasFicticias;
+        return this.arrayLetrasVisibles;
     }
 
     getTamanyoPalabra() {

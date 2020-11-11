@@ -1,10 +1,4 @@
 let headerComponent = Vue.component("header-component", {
-  props: ["nombre"],
-  data: function () {
-      return {
-          myName: this.nombre
-      }
-  },
   template:
       `<header>
       <nav class="navbar navbar-dark bg-dark">
@@ -16,10 +10,7 @@ let headerComponent = Vue.component("header-component", {
       </nav>
     </header>`,
   methods: {
-      mod() {
-          this.$emit("mod", this.myName);
-          console.log("Soy " + this.myName);
-      }
+
   }
 });
 

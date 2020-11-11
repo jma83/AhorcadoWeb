@@ -22,7 +22,7 @@
         <selection-component v-on:start="startGame"></selection-component>
       </div>
       <div v-else>
-        <game-component v-bind:name="nombre" v-bind:dificultad="dificultad"></game-component>
+        <game-component v-on:end="returnSelection" v-bind:name="nombre" v-bind:dificultad="dificultad"></game-component>
       </div>
     </main>
 

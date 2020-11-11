@@ -13,54 +13,66 @@ export default class GameManager {
         this.dificultad = dificultad;
         //se la pasa al wordManager creado
         this.wordManager = new WordManager();
-        //coge el elemento de input del jugador para las letras tecleadas
-
-        //this.wordManager.getWords().then(()=>this.selectMode(Math.floor(dificultad),this.wordManager.getTamanyoPalabra()));
+        this.timerId = "";
 
     }
 
     selectMode(tam) {
-        let pepe= this;
+        let newthis = this;
         return new Promise(function (resolve, reject) {
-            let m = Math.floor(pepe.dificultad);
-            console.log("holi " + m)
-
+            let m = Math.floor(newthis.dificultad);
+            tam = Math.floor(tam);
             if (m == 0) {
-                console.log("tamanyo palabra: " + tam)
-
-                pepe.time = 40 * tam;
-                pepe.letrasVisiblesIni = 0.7 * tam;
-                pepe.lifes = 1.5 * tam;
+                newthis.time = 30 * tam;
+                newthis.letrasVisiblesIni = 0.7 * tam;
+                newthis.lifes = 1.5 * tam;
             } else if (m == 1) {
-                console.log("tamanyo palabra: " + tam)
-
-                pepe.time = 30 * tam;
-                pepe.letrasVisiblesIni = 0.5 * tam;
-                pepe.lifes = 1.0 * tam;
+                newthis.time = 20 * tam;
+                newthis.letrasVisiblesIni = 0.5 * tam;
+                newthis.lifes = 1.0 * tam;
             } else if (m == 2) {
-                console.log("tamanyo palabra: " + tam)
-
-                pepe.time = 20 * tam;
-                pepe.letrasVisiblesIni = 0.4 * tam;
-                pepe.lifes = 0.8 * tam;
+                newthis.time = 10 * tam;
+                newthis.letrasVisiblesIni = 0.4 * tam;
+                newthis.lifes = 0.8 * tam;
             }
-            pepe.letrasVisiblesIni = Math.trunc(pepe.letrasVisiblesIni);
-            pepe.lifes = Math.trunc(pepe.lifes);
-            console.log(pepe.letrasVisiblesIni)
-            console.log(pepe.lifes)
+            newthis.letrasVisiblesIni = Math.trunc(newthis.letrasVisiblesIni);
+            newthis.lifes = Math.trunc(newthis.lifes);
+            newthis.time = Math.trunc(newthis.time);
 
             resolve();
         });
         //this.wordManager
     }
 
+    
 
+    decreaseTime() {
+        if (this.time > 0) 
+            this.time--;
+        else
+            return true;
+        return false;
 
-    checkWin() {
-        if (this)
-            if (this.wordManager.checkGuessedWord() === true) {
-                //Win!
-            }
+    }
+
+    decreaseLife() {
+        this.lifes--;
+    }
+
+    addLetraVisible(a) {
+        this.letrasVisiblesIni += a;
+    }
+
+    comprobarFinPartida() {
+        let i = 0;
+        if (this.wordManager.checkGuessedWord() === true) {
+            //Win!
+            i = 1;
+        } else if (this.lifes <= 0 || this.time <= 0) {
+            //Lose!
+            i = 2;
+        }
+        return i;
     }
 
     getWordManager() {

@@ -17,6 +17,13 @@ new Vue({
             this.nombre = dat.nombre;
             this.dificultad = dat.dificultad
         },
+        returnSelection(){
+            console.log("RETURN!")
+            this.startedGame = false;
+            this.nombre = "";
+            this.dificultad = 0;
+        },
+
         getStartedGame(){
             return this.startedGame;
         }
