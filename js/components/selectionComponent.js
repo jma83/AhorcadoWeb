@@ -7,7 +7,7 @@ let selectionComponent = Vue.component("selection-component", {
     template:
         `
     <div id="seleccionInicial" class="card p-4 m-4 bg-dark text-white">
-      <h2 class="row p-2 justify-content-center">Bienvenido! Introduce nombre y dificultad</h2>
+      <h2 class="row p-2 justify-content-center">Bienvenid@! Introduce nombre y dificultad</h2>
       <form id="my-form">
         <div class="row form-group mt-2 justify-content-center p-2">
           <label for="name" class="col-12 col-md-2">Nombre:</label>

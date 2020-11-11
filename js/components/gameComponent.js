@@ -73,7 +73,6 @@ let gameComponent = Vue.component("game-component", {
     methods: {
         comprobarLetraEnviada() {
             //let letra = document.getElementById("letra").value;
-            this.gm.decreaseTime();
             if (this.estadoPartida === 0) {
                 let res = this.gm.getWordManager().comprobarLetraEnviada(this.valorInput);
                 if (res > 0) {
