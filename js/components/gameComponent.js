@@ -1,37 +1,41 @@
+import GameManager from '../game/gameManager.js'
+
 let gameComponent = Vue.component("game-component", {
-    props: ["nombre"],
+    props:["name","dificultad"],
     data: function () {
         return {
-            myName: this.nombre
+            arrayLetras: [],
+            nombre: this.name,
+            tiempo: 0,
+            letrasTotales: 0,
+            letrasVisibles: 0,
+            vidas: 0
         }
     },
     template:
         `
         <div id="game" class="card m-4 bg-dark text-white">
-            <div class="row justify-content-center mt-4">
+        <h2 class="row p-2 justify-content-center">Encuentra la palabra oculta!</h2>
+
+            <div class="row justify-content-center">
                 <img src="/img/ahorcado.gif" alt="ahorcado" class="col-7 col-sm-2"/>
                 <ul class="list-group list-group-horizontal-sm text-center col-3 col-sm-8  justify-content-sm-center align-self-center">
-                    <li class="list-group-item col col-lg-1 bg-primary h3">C</li>
-                    <li class="list-group-item col col-lg-1 bg-secondary h3 ">_</li>
-                    <li class="list-group-item col col-lg-1 bg-secondary h3">_</li>
-                    <li class="list-group-item col col-lg-1 bg-secondary h3">_</li>
-                    <li class="list-group-item col col-lg-1 bg-secondary h3">_</li>
-                    <li class="list-group-item col col-lg-1 bg-secondary h3">E</li>
+                    <li v-for="n in arrayLetras" class="list-group-item col col-lg-1 bg-secondary h3">{{n}}</li>
                 </ul>
             </div>
             <div class="row justify-content-around">
                 <div class="card col-10 col-md-4 bg-dark align-self-start" style="width: 18rem;">
                     <div class="card-body bg-dark">
-                        <h5 class="card-title">Nombre: Pepe</h5>
+                        <h5 class="card-title">Nombre: {{this.nombre}}</h5>
                         <ul class="list-group list-group-flush ">
                             <li class="list-group-item bg-dark"><button type="button" class="btn btn-danger" >
-                            Vidas <span class="badge badge-light">9</span>
+                            Vidas <span class="badge badge-light">{{this.vidas}}</span>
                           </button></li>
                             <li class="list-group-item bg-dark"><button type="button" class="btn btn-warning" >
-                            Tiempo <span class="badge badge-light">9</span>
+                            Tiempo <span class="badge badge-light">{{this.tiempo}}</span>
                           </button></li>
                             <li class="list-group-item bg-dark"><button type="button" class="btn btn-success" >
-                            Aciertos <span class="badge badge-light">10/18</span>
+                            Visibles <span class="badge badge-light">{{this.letrasVisibles}}/{{this.letrasTotales}}</span>
                           </button></li>
                         </ul>
                     </div>
@@ -49,11 +53,19 @@ let gameComponent = Vue.component("game-component", {
                 </div>
             </div>
       </div>`,
+      async created() {
+        console.log("ME HA LLEGADO LA DIFICULTAD: " + this.dificultad)
+        let gm = new GameManager(this.dificultad);
+        this.arrayLetras = await gm.getWordManager().getLetrasVisibles();
+        this.vidas =await  gm.getVidas();
+        this.tiempo = await gm.getTiempo();
+        
+        this.letrasTotales = await gm.getWordManager().getLetrasVisibles().length;//await gm.getWordManager().getTamanyoPalabra();
+        this.letrasVisibles = await gm.getLetrasOcultas();
+        console.log(this.arrayLetras)
+    },
     methods: {
-        mod() {
-            this.$emit("mod", this.myName);
-            console.log("Soy " + this.myName);
-        }
+        
     }
 });
 
