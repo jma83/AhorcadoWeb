@@ -13,7 +13,7 @@ new Vue({
     },
     methods: {
         startGame(dat){
-            this.startedGame=true;
+            this.startedGame = true;
             this.nombre = dat.nombre;
             this.dificultad = dat.dificultad
         },

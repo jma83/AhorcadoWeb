@@ -1,7 +1,7 @@
 import GameManager from '../game/gameManager.js'
 
 let gameComponent = Vue.component("game-component", {
-    props:["name","dificultad"],
+    props: ["name", "dificultad"],
     data: function () {
         return {
             arrayLetras: [],
@@ -53,19 +53,26 @@ let gameComponent = Vue.component("game-component", {
                 </div>
             </div>
       </div>`,
-      async created() {
+    async created() {
         console.log("ME HA LLEGADO LA DIFICULTAD: " + this.dificultad)
         let gm = new GameManager(this.dificultad);
-        this.arrayLetras = await gm.getWordManager().getLetrasVisibles();
-        this.vidas =await  gm.getVidas();
-        this.tiempo = await gm.getTiempo();
-        
-        this.letrasTotales = await gm.getWordManager().getLetrasVisibles().length;//await gm.getWordManager().getTamanyoPalabra();
-        this.letrasVisibles = await gm.getLetrasOcultas();
+        await gm.getWordManager().getWords()
+            .then(() => gm.selectMode(gm.getWordManager().getTamanyoPalabra())
+                .then(() => gm.getWordManager().mostrarLetrasRandom(gm.getLetrasVisiblesIni()).then(()=>{
+                    console.log("pepito")
+                    this.arrayLetras = gm.getWordManager().getLetrasVisibles();
+                    this.letrasTotales = this.arrayLetras.length;
+                    this.letrasVisibles = gm.getLetrasVisiblesIni();
+                    this.vidas = gm.getVidas();
+                    this.tiempo = gm.getTiempo();
+                })
+                ));
+
+
         console.log(this.arrayLetras)
     },
     methods: {
-        
+
     }
 });
 

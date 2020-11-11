@@ -4,57 +4,78 @@ import WordManager from './wordManager.js'
 //llama al gestor de palabras
 export default class GameManager {
     constructor(dificultad) {
-        
+
         //coge la configuracion del jugador
         this.name = "";
         this.time = 0;
-        this.letrasOcultas = 0;
+        this.letrasVisiblesIni = 0;
         this.lifes = 0;
+        this.dificultad = dificultad;
         //se la pasa al wordManager creado
         this.wordManager = new WordManager();
         //coge el elemento de input del jugador para las letras tecleadas
-        this.selectMode(Math.floor(dificultad));
-        this.wordManager.getWords();
-        
+
+        //this.wordManager.getWords().then(()=>this.selectMode(Math.floor(dificultad),this.wordManager.getTamanyoPalabra()));
+
     }
 
-    selectMode(m){
-        console.log("holi " + m)
+    selectMode(tam) {
+        let pepe= this;
+        return new Promise(function (resolve, reject) {
+            let m = Math.floor(pepe.dificultad);
+            console.log("holi " + m)
 
-        if (m == 0){
-            this.time = 120;
-            this.letrasOcultas = 0.3;
-            this.lifes = 1.5;
-        }else if (m == 1){
-            this.time = 90;
-            this.letrasOcultas = 0.5;
-            this.lifes = 1.0;
-        }else if (m == 2){
-            this.time = 60;
-            this.letrasOcultas = 0.6;
-            this.lifes = 0.8;
-        }
+            if (m == 0) {
+                console.log("tamanyo palabra: " + tam)
+
+                pepe.time = 40 * tam;
+                pepe.letrasVisiblesIni = 0.7 * tam;
+                pepe.lifes = 1.5 * tam;
+            } else if (m == 1) {
+                console.log("tamanyo palabra: " + tam)
+
+                pepe.time = 30 * tam;
+                pepe.letrasVisiblesIni = 0.5 * tam;
+                pepe.lifes = 1.0 * tam;
+            } else if (m == 2) {
+                console.log("tamanyo palabra: " + tam)
+
+                pepe.time = 20 * tam;
+                pepe.letrasVisiblesIni = 0.4 * tam;
+                pepe.lifes = 0.8 * tam;
+            }
+            pepe.letrasVisiblesIni = Math.trunc(pepe.letrasVisiblesIni);
+            pepe.lifes = Math.trunc(pepe.lifes);
+            console.log(pepe.letrasVisiblesIni)
+            console.log(pepe.lifes)
+
+            resolve();
+        });
+        //this.wordManager
     }
 
-    checkWin(){
+
+
+    checkWin() {
         if (this)
-        if (this.wordManager.checkGuessedWord()===true){
-            //Win!
-        }
+            if (this.wordManager.checkGuessedWord() === true) {
+                //Win!
+            }
     }
 
-    getWordManager(){
+    getWordManager() {
         return this.wordManager;
     }
 
-    getVidas(){
+    getVidas() {
         return this.lifes;
     }
-    getTiempo(){
+
+    getTiempo() {
         return this.time;
     }
 
-    getLetrasOcultas(){
-        return this.letrasOcultas;
+    getLetrasVisiblesIni() {
+        return this.letrasVisiblesIni;
     }
 }

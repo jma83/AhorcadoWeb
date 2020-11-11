@@ -16,11 +16,17 @@ export default class LetterManager {
     getLetter(){
         return this.letter;
     }
+
     getVisibleLetter(){
-        return this.letter;
+        return this.visibleLetter;
     }
 
-    
+    comprobarLetra(a){
+        if (a==this.letter){
+            return true;
+        }
+        return false;
+    }
 
 
 }

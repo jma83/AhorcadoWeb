@@ -19,15 +19,15 @@ export default class WordManager {
     }
 
     checkGuessedWord() {
-        
+
     }
 
-    seleccionarPalabra(){
+    seleccionarPalabra() {
         const a = Math.floor(Math.random() * (this.palabras.length));
         this.palabra = this.palabras[a].word;
         console.log(this.palabra);
         let i = 0;
-        for(i =0;i<this.palabra.length;i++){
+        for (i = 0; i < this.palabra.length; i++) {
             this.arrayLetras.push(new LetterManager());
             this.arrayLetras[i].setLetter(this.palabra.charAt(i));
             this.arrayLetrasFicticias.push("_");
@@ -38,28 +38,69 @@ export default class WordManager {
         this.palabras = [];
     }
 
-    getWords(){
-        const address = fetch("./js/data/words.json")
-        .then((response) => response.json())
-        .then((data) => {
-            this.palabras = data.wordList;
-        }).then(() =>{
-            this.seleccionarPalabra();
+    mostrarLetrasRandom(tam) {
+        let pepe = this;
+        let arrayLettrasRandom = [];
+        let posicionRandom=-1;
+        return new Promise(function (resolve, reject) {
+            let cont = 0;
+            for (let i = 0; i < tam; i++) {
+                cont = 0;
+                posicionRandom = pepe.encontrarLetraDistinta(arrayLettrasRandom);
+                let letra = pepe.arrayLetras[posicionRandom].getLetter();
+                arrayLettrasRandom.push(letra);
+                /*for (let j = 0; cont < pepe.palabra.length; j++) {
+                    if (pepe.palabra[j].getLetter() === letra && posicionRandom !== j) {
+                        cont++;
+                    }
+                }*/
+                if (cont == 0) {
+                    pepe.arrayLetrasFicticias[posicionRandom] = letra;
+                    console.log("hola!")
+                } else {
+                    console.log("la letra:" + letra + " esta varias veces!!! " + cont)
+                }
+            }
+            resolve();
         });
     }
 
-    getArrayLetras(){
+    encontrarLetraDistinta(p) {
+        let posicionRandom = -1;
+        do {
+            posicionRandom = Math.floor(Math.random() * (this.arrayLetrasFicticias.length));
+        } while (p.includes(this.arrayLetras[posicionRandom].getLetter()));
+        console.log("pos random! selected" + posicionRandom)
+        return posicionRandom;
+    }
+
+    getWords() {
+        let pepe = this;
+        return new Promise(function (resolve, reject) {
+
+            fetch("./js/data/words.json")
+                .then((response) => response.json())
+                .then((data) => {
+                    pepe.palabras = data.wordList;
+                }).then(() => {
+                    pepe.seleccionarPalabra();
+                }).then(() => {
+                    resolve();
+                });
+
+
+        });
+    }
+
+    getArrayLetras() {
         return this.arrayLetras;
     }
 
-    getLetrasVisibles(){
-
+    getLetrasVisibles() {
         return this.arrayLetrasFicticias;
     }
 
-    getTamanyoPalabra(){
-        console.log("alla voy!")
-        console.log(this.tamanyoPalabra)
+    getTamanyoPalabra() {
         return this.tamanyoPalabra;
     }
 
