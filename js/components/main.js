@@ -18,7 +18,6 @@ new Vue({
             this.dificultad = dat.dificultad
         },
         returnSelection(){
-            console.log("RETURN!")
             this.startedGame = false;
             this.nombre = "";
             this.dificultad = 0;

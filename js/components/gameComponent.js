@@ -61,21 +61,21 @@ let gameComponent = Vue.component("game-component", {
             </div>
       </div>`,
     async created() {
-        let newthis = this;
-        await this.gm.getWordManager().getWords()
-            .then(() => this.gm.selectMode(this.gm.getWordManager().getTamanyoPalabra())
-                .then(() => this.gm.getWordManager().mostrarLetrasRandom(this.gm.getLetrasVisiblesIni())
+        await this.gm.getWordManager().getWords()   //obtenemos las palabras y seleccionamos 1
+            .then(() => this.gm.selectMode(this.gm.getWordManager().getTamanyoPalabra())    //seleccionamos el modo a partir de la dificultad y el tamanyo de palabra
+                .then(() => this.gm.getWordManager().mostrarLetrasRandom(this.gm.getLetrasVisiblesIni())    //mostrar numero de letras asociadas a la palabra
                     .then(() => {
-                        this.actualizarArrayLetras();
-                        this.startTime();
+                        this.actualizarArrayLetras();   //actualizamos el array de letras asociado a la vista
+                        this.startTime();   //empieza el temporizador
+                    }).catch((e) => {
+                        alert("Algo ha ido mal! " + e);
                     })
                 ));
 
         console.log(this.arrayLetras)
     },
     methods: {
-        comprobarLetraEnviada() {
-            //let letra = document.getElementById("letra").value;
+        comprobarLetraEnviada() {   //metodo encargado de enviar la letra seleccionada por el usuario y comprobar si coincide
             if (this.estadoPartida === 0) {
                 let res = this.gm.getWordManager().comprobarLetraEnviada(this.valorInput);
                 if (res > 0) {
@@ -87,12 +87,12 @@ let gameComponent = Vue.component("game-component", {
                     this.descripcion = `<span class="text-danger">Vaya! Letra '` + this.valorInput + `' no encontrada! <br> Has perdido una vida!</span>`;
                     this.gm.decreaseLife();
                 }
-                this.comprobarFinPartida();
+                this.comprobarFinPartida(); 
                 this.actualizarArrayLetras();
                 this.valorInput = "";
             }
         },
-        comprobarFinPartida() {
+        comprobarFinPartida() { //metodo encargado de comprobar si se gana o pierde
             this.estadoPartida = this.gm.comprobarFinPartida();
             if (this.estadoPartida === 1) {
                 this.descripcion = "FIN DE LA PARTIDA! " + this.descripcion;
@@ -105,9 +105,7 @@ let gameComponent = Vue.component("game-component", {
             } 
         },
         endGameEvent() {
-
             this.$emit("end");
-
         },
         actualizarArrayLetras() {
             this.arrayLetras = this.gm.getWordManager().getLetrasVisibles()

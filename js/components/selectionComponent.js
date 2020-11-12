@@ -24,7 +24,7 @@ let selectionComponent = Vue.component("selection-component", {
       </form>
     </div>`,
     methods: {
-        startGameEvent(e) {
+        startGameEvent(e) { //Al pulsar en alguno de los botones empieza el juego!
 
             let dificultad = e.target.dataset.dif;
             let nombre = document.getElementById("name").value;
