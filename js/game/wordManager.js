@@ -41,15 +41,15 @@ export default class WordManager {
         return new Promise(function (resolve, reject) {
             let cont = 0;
             let contaux = 0;
-            let contfin = 0;
+            let exit = 0;
             let letra = "";
-            while (cont != tam && contfin<tam*2){   //condicion de salida extra por si no encuentra otra letra que encaje con el numero solicitado
+            while (cont != tam && exit<tam*2){   //condicion de salida extra por si no encuentra otra letra que encaje con el numero solicitado
                 contaux = cont;
                 posicionRandom = newthis.encontrarLetraDistinta(arrayLettrasRandom);    //busco una letra que no este ya marcada
                 letra = newthis.arrayObjLetras[posicionRandom].getLetter();
                 arrayLettrasRandom.push(letra); //una vez encontrado la guardo en la lista
                 for (let j = 0; j < newthis.arrayLetrasVisibles.length; j++) {  //busco el numero de ocurrencias de esa letra en la palabra
-                    if (newthis.arrayObjLetras[j].getLetter() === letra) {
+                    if (newthis.arrayObjLetras[j].getLetter() === letra.toLowerCase()) {
                         cont++;
                         arrayPosicionesOk.push(j);
                     }
@@ -59,12 +59,12 @@ export default class WordManager {
                     console.log("la letra:" + letra + " esta varias veces!!! " + cont)
                     cont = contaux;
                 }else{  //si el numero de ocurrencias es inferior o igual lo recorro y cambio para mostrarlo
-                    for (let k = 0; k < cont;k++){
+                    for (let k = 0; k < (cont-contaux);k++){
                         let indice = arrayPosicionesOk[k];
                         newthis.arrayLetrasVisibles[indice]=newthis.arrayObjLetras[indice].getLetter();
                     }
                 }
-                contfin++;
+                exit++;
             }
             resolve();
         });
@@ -72,9 +72,11 @@ export default class WordManager {
 
     encontrarLetraDistinta(p) { // Metodo que busca una letra aleatoria dentro de la palabra que noo este ya en la lista recibida por parametro
         let posicionRandom = -1;
+        let exit = 0;
         do {
             posicionRandom = Math.floor(Math.random() * (this.arrayLetrasVisibles.length));
-        } while (p.includes(this.arrayObjLetras[posicionRandom].getLetter()));
+            exit++;
+        } while (p.includes(this.arrayObjLetras[posicionRandom].getLetter()) && exit<=this.arrayLetrasVisibles.length*2);
 
         return posicionRandom;
     }
