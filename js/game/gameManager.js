@@ -13,11 +13,10 @@ export default class GameManager {
         this.dificultad = dificultad;
         //se la pasa al wordManager creado
         this.wordManager = new WordManager();
-        this.timerId = "";
 
     }
 
-    selectMode(tam) {
+    selectMode(tam) {   //metodo que selecciona la dificultad y la ajusta en funcion del tamanyo de la palabra
         let newthis = this;
         return new Promise(function (resolve, reject) {
             let m = Math.floor(newthis.dificultad);

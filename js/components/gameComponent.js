@@ -16,13 +16,16 @@ let gameComponent = Vue.component("game-component", {
     },
     template:
         `
-        <div id="game" class="card  p-4  m-4 bg-dark text-white">
-        <h2 class="row p-2 justify-content-center">{{msgCabecera}}</h2>
+        <div id="game" class="card p-4 m-4 bg-dark text-white">
+            <h2 class="row p-2 justify-content-center">{{msgCabecera}}</h2>
 
             <div class="row justify-content-center">
-                <img src="./img/ahorcado.gif" alt="ahorcado" class="col-12 col-sm-7 col-md-2"/>
-                <ul class="list-group list-group-horizontal-sm text-center col-3 col-sm-8  justify-content-sm-center align-self-center">
-                    <li v-for="n in getArrayLetras()" class="list-group-item col col-lg-1 bg-secondary h3">{{n}}</li>
+                <img src="./img/ahorcado.gif" alt="ahorcado" class=" col-sm-7 col-md-2 d-none d-sm-block"/>
+                <ul class="list-group list-group-horizontal-sm text-center col-3 col-sm-8 justify-content-center">
+                    <li v-for="n in getArrayLetras()" class="list-group-item col col-lg-1 bg-secondary h3 align-self-center palabraFin">{{n}}</li>
+                </ul>
+                <ul class="list-group list-group-horizontal-sm text-center col-2 col-sm-8 fixed-bottom d-block d-sm-none mb-5 ml-2">
+                    <li v-for="n in getArrayLetras()" class="list-group-item col col-lg-1 bg-info h3 d-block d-sm-none">{{n}}</li>
                 </ul>
             </div>
             <div class="row justify-content-around">

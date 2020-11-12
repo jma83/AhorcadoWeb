@@ -5,12 +5,9 @@ let footerComponent = Vue.component("footer-component", {
         <div class="container">
           <span class="text-muted">Javier Martinez Arias - Práctica 2: Tecnologías del lado del cliente - UPSA</span>
         </div>
-      </footer>`,
-    methods: {
-
-    }
+      </footer>`
   });
   
   export default {
-    footerComponent,
+    footerComponent
   }

@@ -32,7 +32,6 @@ export default class WordManager {
             this.arrayLetrasVisibles.push("_");
         }
         this.tamanyoPalabra = i;
-        palabra = "";
         this.palabras = [];
     }
 
@@ -57,7 +56,6 @@ export default class WordManager {
                         arrayPosicionesOk.push(j);
                     }
                 }
-                contfin++;
 
                 if (cont > tam) {   //si el numero de ocurrencias es superior reinicio el contador y busco otra letra
                     console.log("la letra:" + letra + " esta varias veces!!! " + cont)
@@ -68,6 +66,7 @@ export default class WordManager {
                         newthis.arrayLetrasVisibles[indice]=newthis.arrayLetras[indice].getLetter();
                     }
                 }
+                contfin++;
             }
             resolve();
         });
@@ -97,8 +96,6 @@ export default class WordManager {
                 }).catch((e) =>{
                     reject(e);
                 });
-
-
         });
     }
 
@@ -115,7 +112,6 @@ export default class WordManager {
                 }
             }
         }
-
         return b;
     }
 

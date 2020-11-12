@@ -8,10 +8,7 @@ let headerComponent = Vue.component("header-component", {
           <h1 class="float-left">El Ahorcado Web!</h1>
         </a>
       </nav>
-    </header>`,
-  methods: {
-
-  }
+    </header>`
 });
 
 export default {

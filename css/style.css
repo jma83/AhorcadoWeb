@@ -1,0 +1,32 @@
+.h3 {
+    font-size: 1rem;
+  }
+.palabraFin{
+    display: none;
+}
+h2{
+    font-size: 1.5rem;
+}
+  @media (min-width: 576px) {
+    .h3 {
+      font-size: 1.3rem;
+    }
+    .palabraFin{
+        display: block;
+    }
+    h2{
+        font-size: 2rem;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .h3 {
+      font-size: 1.6rem;
+    }
+  }
+  
+  @media (min-width: 992px) {
+    .h3 {
+      font-size: 1.8rem;
+    }
+  }
