@@ -20,7 +20,7 @@ let gameComponent = Vue.component("game-component", {
         <h2 class="row p-2 justify-content-center">{{msgCabecera}}</h2>
 
             <div class="row justify-content-center">
-                <img src="/img/ahorcado.gif" alt="ahorcado" class="col-12 col-sm-7 col-md-2"/>
+                <img src="./img/ahorcado.gif" alt="ahorcado" class="col-12 col-sm-7 col-md-2"/>
                 <ul class="list-group list-group-horizontal-sm text-center col-3 col-sm-8  justify-content-sm-center align-self-center">
                     <li v-for="n in getArrayLetras()" class="list-group-item col col-lg-1 bg-secondary h3">{{n}}</li>
                 </ul>
