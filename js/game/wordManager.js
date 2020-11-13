@@ -59,7 +59,7 @@ export default class WordManager {
                     console.log("la letra:" + letra + " esta varias veces!!! " + cont)
                     cont = contaux;
                 }else{  //si el numero de ocurrencias es inferior o igual lo recorro y cambio para mostrarlo
-                    for (let k = 0; k < (cont-contaux);k++){
+                    for (let k = 0; k < (cont);k++){
                         let indice = arrayPosicionesOk[k];
                         newthis.arrayLetrasVisibles[indice]=newthis.arrayObjLetras[indice].getLetter();
                     }
